@@ -1,0 +1,86 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>3D Water Tank</title>
+	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+ <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDi54pk3QmlFukR95XFTdZv4whSufAccGQ",
+    authDomain: "water-sensor-366c2.firebaseapp.com",
+    databaseURL: "https://water-sensor-366c2.firebaseio.com",
+    projectId: "water-sensor-366c2",
+    storageBucket: "water-sensor-366c2.appspot.com",
+    messagingSenderId: "672679392172",
+    appId: "1:672679392172:web:4238cbb44533824ff24009"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+</script>
+</head>
+<body>
+<style>
+.wrap{
+	font-family: Roboto;
+	text-align: center;
+}
+.tank{
+	margin:0 50px;
+	display: inline-block;
+}
+body{
+	/*background: #eee;*/
+	margin: 0;
+}
+</style>
+<div class="wrap">
+	<div class="tank waterTankHere1"></div>
+	<div class="tank waterTankHere2"></div>
+	<div class="tank waterTankHere3"></div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="./waterTank.js"></script>
+<script>
+$(document).ready(function() {
+  	var distance=0;
+  	var distance_tank1 = firebase.database().ref('user/tank1/distance');
+	distance_tank1.on('value', function(snapshot) {
+		distance= snapshot.val();
+		$('.waterTankHere1').waterTank({
+		width: 420,
+		height: 360,
+		color: '#8bd0ec',
+		level: distance
+		}).on('click', function(event) {
+			$(this).waterTank(Math.floor(Math.random() * 100) + 0 );
+		});
+		$('.waterTankHere2').waterTank({
+		width: 80,
+		height: 360,
+		color: '#f00',
+		level: distance
+		}).on('click', function(event) {
+			$(this).waterTank(Math.floor(Math.random() * 100) + 0 );
+		});
+	  
+		$('.waterTankHere3').waterTank({
+			width: 20,
+			height: 360,
+			color: '#2e32ff',
+			level: distance
+		}).on('click', function(event) {
+			$(this).waterTank(Math.floor(Math.random() * 100) + 0 );
+		});
+	});
+});
+</script>
+</body>
+
+</html>

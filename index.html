@@ -2,30 +2,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>3D Water Tank</title>
-	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
- <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-database.js"></script>
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyDi54pk3QmlFukR95XFTdZv4whSufAccGQ",
-    authDomain: "water-sensor-366c2.firebaseapp.com",
-    databaseURL: "https://water-sensor-366c2.firebaseio.com",
-    projectId: "water-sensor-366c2",
-    storageBucket: "water-sensor-366c2.appspot.com",
-    messagingSenderId: "672679392172",
-    appId: "1:672679392172:web:4238cbb44533824ff24009"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  
-</script>
-</head>
-<body>
 <style>
 .wrap{
 	font-family: Roboto;
@@ -40,11 +16,28 @@ body{
 	margin: 0;
 }
 </style>
-<div class="wrap">
-	<div class="tank waterTankHere1"></div>
-	<div class="tank waterTankHere2"></div>
-	<div class="tank waterTankHere3"></div>
-</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-database.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+	  <a class="navbar-brand" href="#">
+	    <img src="blur.png" width="30" height="30" class="d-inline-block align-top" alt="">
+	    Water Monitor
+	  </a>
+	</nav>
+	<div class="wrap">
+		<div class="tank waterTankHere1"></div>
+		<div class="tank waterTankHere2"></div>
+		<div class="tank waterTankHere3"></div>
+	</div>
+</body>
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="./waterTank.js"></script>
 <script>
@@ -58,18 +51,28 @@ $(document).ready(function() {
 		height: 360,
 		color: '#8bd0ec',
 		level: distance
-		}).on('click', function(event) {
-			$(this).waterTank(Math.floor(Math.random() * 100) + 0 );
-		});
+		})
+	});
+	var distance_tank2 = firebase.database().ref('user/tank2/distance');
+	distance_tank2.on('value', function(snapshot) {
+		distance= snapshot.val();
 		$('.waterTankHere2').waterTank({
 		width: 80,
 		height: 360,
 		color: '#f00',
 		level: distance
-		}).on('click', function(event) {
-			$(this).waterTank(Math.floor(Math.random() * 100) + 0 );
-		});
-	  
+		})
+	}); 
+	var distance_tank3 = firebase.database().ref('user/tank3/distance');
+	distance_tank3.on('value', function(snapshot) {
+		distance= snapshot.val();
+		$('.waterTankHere3').waterTank({
+			width: 20,
+			height: 360,
+			color: '#2e32ff',
+			level: distance
+		})
+		/*
 		$('.waterTankHere3').waterTank({
 			width: 20,
 			height: 360,
@@ -77,10 +80,8 @@ $(document).ready(function() {
 			level: distance
 		}).on('click', function(event) {
 			$(this).waterTank(Math.floor(Math.random() * 100) + 0 );
-		});
+		});*/
 	});
 });
 </script>
-</body>
-
 </html>

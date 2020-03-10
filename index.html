@@ -32,15 +32,37 @@ body{
 	  </a>
 	</nav>
 	<div class="wrap">
-		<div class="tank waterTankHere1"></div>
-		<div class="tank waterTankHere2"></div>
-		<div class="tank waterTankHere3"></div>
+		<div class="btn-group-vertical" style="float: left;width: 50%;">
+		    <button id="tank1btn" class="btn btn-primary" style="height: 195px;font-size: 30px;">Tank 1</button>
+		    <button id="tank2btn" class="btn btn-primary" style="height: 195px;font-size: 30px;">Tank 2</button>
+		    <button id="tank3btn" class="btn btn-primary" style="height: 195px;font-size: 30px;">Tank 3</button>
+		</div>
+		<div style="float: right;width: 50%;">
+			<div class="tank waterTankHere1" id="tank1"></div>
+			<div class="tank waterTankHere2" id="tank2" style="display: none;"></div>
+			<div class="tank waterTankHere3" id="tank3" style="display: none;"></div>
+		</div>
 	</div>
 </body>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="./waterTank.js"></script>
 <script>
+	$('#tank1btn').on('click',function(){
+		$('#tank1').toggle();
+		$('#tank2').hide();
+		$('#tank3').hide();
+	});
+	$('#tank2btn').on('click',function(){
+		$('#tank2').toggle();
+		$('#tank1').hide();
+		$('#tank3').hide();
+	});
+	$('#tank3btn').on('click',function(){
+		$('#tank3').toggle();
+		$('#tank2').hide();
+		$('#tank1').hide();
+	});
 $(document).ready(function() {
   	var distance=0;
   	var distance_tank1 = firebase.database().ref('user/tank1/distance');
